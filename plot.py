@@ -6,7 +6,6 @@ import numpy as np
 from matplotlib import rcParams
 from mpl_toolkits.axisartist.axislines import Subplot
 
-
 matplotlib.rc('xtick', labelsize=17) 
 matplotlib.rc('ytick', labelsize=17) 
 
