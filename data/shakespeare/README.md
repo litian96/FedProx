@@ -11,7 +11,7 @@
   - ```--tf``` := fraction of data in training set, written as a decimal; default is 0.8
   - ```--raw``` := include users' raw text data in all_data.json
 
-Instruction used to generate EMNIST in the paper:
+Instruction used to generate Shakespeare in the paper:
 
 ```
 ./preprocess.sh -s niid --sf 0.2 -k 0 -tf 0.8 -t sample
