@@ -12,7 +12,7 @@ Run preprocess.sh with a choice of the following tags:
 - ```--tf``` := fraction of data in training set, written as a decimal; default is 0.9
 
 
-Instruction used to generate EMNIST in the paper:
+Instruction used to generate Sent140 in the paper:
 
 ```
 ./preprocess.sh -s niid --sf 1.0 -k 20 -tf 0.8 -t sample
