@@ -1,6 +1,12 @@
 # Shakespeare Dataset
 
 ## Setup Instructions
+
+
+You can download the dataset [here](https://drive.google.com/file/d/1cVpkJA0cIKN4t-n5Fl95sPlAzhGgE_ZJ/view?usp=sharing), unzip it and put the `train` and `test` folder under `data`.
+
+The above dataset is sampled using the following instructions:
+ 
 - Run preprocess.sh with a choice of the following tags:
 
   - ```-s``` := 'iid' to sample in an i.i.d. manner, or 'niid' to sample in a non-i.i.d. manner; more information on i.i.d. versus non-i.i.d. is included in the 'Notes' section
@@ -18,6 +24,5 @@ Instruction used to generate Shakespeare in the paper:
 ```
 
 
-Make sure to delete the rem_user_data, sampled_data, test, and train subfolders in the data directory before re-running preprocess.sh
+Make sure to delete the rem\_user\_data, sampled\_data, test, and train subfolders in the data directory before re-running preprocess.sh
 
-Or you can download the dataset [here](https://drive.google.com/file/d/1n46Mftp3_ahRi1Z6jYhEriyLtdRDS1tD/view?usp=sharing), unzip it and put the `train` and `test` folder under `data`.

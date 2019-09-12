@@ -1,6 +1,6 @@
 # MNIST Dataset
 
-
+First download the raw data [here](https://drive.google.com/file/d/1Vp_gJHw4pPqwMUSgodhFOqUglAQyaOGD/view?usp=sharing), put `mnist-original.mat` under the folder `data/mldata/`.
 
 To generate non-iid data:
 
@@ -19,7 +19,7 @@ The layout of the folders under `./mnist` should be:
 
 ----| mldata
 
----- ----| raw_data.mat
+---- ----| mnist-original.mat
 
 ----| train 
 

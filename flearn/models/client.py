@@ -6,8 +6,8 @@ class Client(object):
         self.model = model
         self.id = id # integer
         self.group = group
-        self.train_data = {k: np.array(v) for k,v in train_data.items()}
-        self.eval_data = {k: np.array(v) for k,v in eval_data.items()}
+        self.train_data = {k: np.array(v) for k, v in train_data.items()}
+        self.eval_data = {k: np.array(v) for k, v in eval_data.items()}
         self.num_samples = len(self.train_data['y'])
         self.test_samples = len(self.eval_data['y'])
 
@@ -44,6 +44,22 @@ class Client(object):
 
         bytes_w = self.model.size
         soln, comp = self.model.solve_inner(self.train_data, num_epochs, batch_size)
+        bytes_r = self.model.size
+        return (self.num_samples, soln), (bytes_w, comp, bytes_r)
+
+    def solve_iters(self, num_iters=1, batch_size=10):
+        '''Solves local optimization problem
+
+        Return:
+            1: num_samples: number of samples used in training
+            1: soln: local optimization solution
+            2: bytes read: number of bytes received
+            2: comp: number of FLOPs executed in training process
+            2: bytes_write: number of bytes transmitted
+        '''
+
+        bytes_w = self.model.size
+        soln, comp = self.model.solve_iters(self.train_data, num_iters, batch_size)
         bytes_r = self.model.size
         return (self.num_samples, soln), (bytes_w, comp, bytes_r)
 

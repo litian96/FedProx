@@ -5,7 +5,7 @@ from tqdm import trange
 
 from tensorflow.contrib import rnn
 
-from flearn.utils.model_utils import batch_data
+from flearn.utils.model_utils import batch_data, batch_data_multiple_iters
 from flearn.utils.language_utils import line_to_indices
 from flearn.utils.tf_utils import graph_size, process_grad
 
@@ -138,6 +138,18 @@ class Model(object):
                         feed_dict={self.features: input_data, self.labels: target_data})
         soln = self.get_params()
         comp = num_epochs * (len(data['y'])//batch_size) * batch_size * self.flops
+        return soln, comp
+
+    def solve_iters(self, data, num_iters=1, batch_size=32):
+        '''Solves local optimization problem'''
+
+        for X, y in batch_data_multiple_iters(data, batch_size, num_iters):
+            input_data = process_x(X, self.seq_len)
+            target_data = process_y(y)
+            with self.graph.as_default():
+                self.sess.run(self.train_op, feed_dict={self.features: input_data, self.labels: target_data})
+        soln = self.get_params()
+        comp = 0
         return soln, comp
     
     def test(self, data):

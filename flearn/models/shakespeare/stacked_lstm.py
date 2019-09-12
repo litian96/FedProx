@@ -12,7 +12,7 @@ utils_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 utils_dir = os.path.join(utils_dir, 'utils')
 sys.path.append(utils_dir)
 
-from model_utils import batch_data
+from model_utils import batch_data, batch_data_multiple_iters
 from language_utils import letter_to_vec, word_to_indices
 from tf_utils import graph_size
 from tf_utils import process_sparse_grad
@@ -105,7 +105,6 @@ class Model(object):
             processed_samples = num_samples
 
         else:  # in order to fit into memory, compute gradients in a batch of size 50, and subsample a subset of points to approximate
-
             for i in range(min(int(num_samples / 50), 4)):
                 input_data = process_x(data['x'][50*i:50*(i+1)])
                 target_data = process_y(data['y'][50*i:50*(i+1)])
@@ -139,6 +138,18 @@ class Model(object):
                         feed_dict={self.features: input_data, self.labels: target_data})
         soln = self.get_params()
         comp = num_epochs * (len(data['y'])//batch_size) * batch_size * self.flops
+        return soln, comp
+
+    def solve_iters(self, data, num_iters=1, batch_size=32):
+        '''Solves local optimization problem'''
+
+        for X, y in batch_data_multiple_iters(data, batch_size, num_iters):
+            input_data = process_x(X)
+            target_data = process_y(y)
+            with self.graph.as_default():
+                self.sess.run(self.train_op, feed_dict={self.features: input_data, self.labels: target_data})
+        soln = self.get_params()
+        comp = 0
         return soln, comp
     
     def test(self, data):

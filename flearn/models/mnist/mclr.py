@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 from tqdm import trange
 
-from flearn.utils.model_utils import batch_data
+from flearn.utils.model_utils import batch_data, batch_data_multiple_iters
 from flearn.utils.tf_utils import graph_size
 from flearn.utils.tf_utils import process_grad
 
@@ -40,7 +40,7 @@ class Model(object):
         logits = tf.layers.dense(inputs=features, units=self.num_classes, kernel_regularizer=tf.contrib.layers.l2_regularizer(0.001))
         predictions = {
             "classes": tf.argmax(input=logits, axis=1),
-                "probabilities": tf.nn.softmax(logits, name="softmax_tensor")
+            "probabilities": tf.nn.softmax(logits, name="softmax_tensor")
             }
         loss = tf.losses.sparse_softmax_cross_entropy(labels=labels, logits=logits)
 
@@ -83,6 +83,16 @@ class Model(object):
                         feed_dict={self.features: X, self.labels: y})
         soln = self.get_params()
         comp = num_epochs * (len(data['y'])//batch_size) * batch_size * self.flops
+        return soln, comp
+
+    def solve_iters(self, data, num_iters=1, batch_size=32):
+        '''Solves local optimization problem'''
+
+        for X, y in batch_data_multiple_iters(data, batch_size, num_iters):
+            with self.graph.as_default():
+                self.sess.run(self.train_op, feed_dict={self.features: X, self.labels: y})
+        soln = self.get_params()
+        comp = 0
         return soln, comp
     
     def test(self, data):

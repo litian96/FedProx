@@ -106,21 +106,21 @@ class BaseFedarated(object):
         Return:
             list of selected clients objects
         '''
-        num_clients = min(num_clients, len(self.clients))
-        np.random.seed(round)
-        return np.random.choice(self.clients, num_clients, replace=False) #, p=pk)
 
+        num_clients = min(num_clients, len(self.clients))
+        np.random.seed(round)  # make sure for each comparison, we are selecting the same clients each round
+        indices = np.random.choice(range(len(self.clients)), num_clients, replace=False)
+        return indices, np.asarray(self.clients)[indices]
 
     def aggregate(self, wsolns):
         total_weight = 0.0
         base = [0]*len(wsolns[0][1])
-        for (w, soln) in wsolns:  # w is the number of samples
+        for (w, soln) in wsolns:  # w is the number of local samples
             total_weight += w
             for i, v in enumerate(soln):
                 base[i] += w*v.astype(np.float64)
 
         averaged_soln = [v / total_weight for v in base]
-
 
         return averaged_soln
 

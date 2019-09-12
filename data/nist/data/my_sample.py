@@ -10,7 +10,7 @@ from tqdm import trange
 from PIL import Image
 
 NUM_USER = 200
-CLASS_PER_USER = 19
+CLASS_PER_USER = 3  # from 10 lowercase characters
 
 
 def relabel_class(c):
@@ -26,7 +26,7 @@ def relabel_class(c):
     elif int(c, 16) <= 90: # uppercase
         return (int(c, 16) - 55)
     else:
-        return (int(c, 16) - 61)
+        return (int(c, 16) - 61) # lowercase
 
 def load_image(file_name):
     '''read in a png
@@ -47,9 +47,6 @@ def load_image(file_name):
 def main():
     file_dir = "raw_data/by_class"
 
-    train_data = {'users': [], 'user_data':{}, 'num_samples':[]}
-    test_data = {'users': [], 'user_data':{}, 'num_samples':[]}
-
     train_path = "train/mytrain.json"
     test_path = "test/mytest.json"
 
@@ -62,13 +59,11 @@ def main():
     for class_ in os.listdir(file_dir):
 
         real_class = relabel_class(class_)
-
-        if real_class >= 36 and real_class <= 61: 
-
+        if real_class >= 36 and real_class <= 45:
             full_img_path = file_dir + "/" + class_ + "/train_" + class_
             all_files_this_class = os.listdir(full_img_path)
             random.shuffle(all_files_this_class)
-            sampled_files_this_class = all_files_this_class[:7000]
+            sampled_files_this_class = all_files_this_class[:4000]
             imgs = []
             for img in sampled_files_this_class:
                 imgs.append(load_image(full_img_path + "/" + img))
@@ -77,21 +72,20 @@ def main():
             nist_data[class_-36] = imgs  # a list of list, key is (0, 25)
             print(len(imgs))
 
-    # assign samples to users by power law
-    num_samples = np.random.lognormal(4, 2, (NUM_USER)) + 5
+    num_samples = np.random.lognormal(4, 1, (NUM_USER)) + 5
 
-    idx = np.zeros(26, dtype=np.int64)
+    idx = np.zeros(10, dtype=np.int64)
 
     for user in range(NUM_USER):
-        num_sample_per_class = int(num_samples[user]/CLASS_PER_USER)
+        num_sample_per_class = int(num_samples[user] / CLASS_PER_USER)
         if num_sample_per_class < 2:
             num_sample_per_class = 2
 
         for j in range(CLASS_PER_USER):
-            class_id = (user + j) % 26
+            class_id = (user + j) % 10
             if idx[class_id] + num_sample_per_class < len(nist_data[class_id]):
                 idx[class_id] = 0
-            X[user] += nist_data[class_id][idx[class_id] : (idx[class_id] + num_sample_per_class)]
+            X[user] += nist_data[class_id][idx[class_id]: (idx[class_id] + num_sample_per_class)]
             y[user] += (class_id * np.ones(num_sample_per_class)).tolist()
             idx[class_id] += num_sample_per_class
     
@@ -115,9 +109,8 @@ def main():
         test_data['users'].append(uname)
         test_data['user_data'][uname] = {'x': X[i][train_len:], 'y': y[i][train_len:]}
         test_data['num_samples'].append(test_len)
-    
 
-    with open(train_path,'w') as outfile:
+    with open(train_path, 'w') as outfile:
         json.dump(train_data, outfile)
     with open(test_path, 'w') as outfile:
         json.dump(test_data, outfile)

@@ -23,6 +23,30 @@ def batch_data(data, batch_size):
         batched_y = data_y[i:i+batch_size]
         yield (batched_x, batched_y)
 
+def batch_data_multiple_iters(data, batch_size, num_iters):
+    data_x = data['x']
+    data_y = data['y']
+
+    np.random.seed(100)
+    rng_state = np.random.get_state()
+    np.random.shuffle(data_x)
+    np.random.set_state(rng_state)
+    np.random.shuffle(data_y)
+
+    idx = 0
+
+    for i in range(num_iters):
+        if idx+batch_size >= len(data_x):
+            idx = 0
+            rng_state = np.random.get_state()
+            np.random.shuffle(data_x)
+            np.random.set_state(rng_state)
+            np.random.shuffle(data_y)
+        batched_x = data_x[idx: idx+batch_size]
+        batched_y = data_y[idx: idx+batch_size]
+        idx += batch_size
+        yield (batched_x, batched_y)
+
 def read_data(train_data_dir, test_data_dir):
     '''parses data in given train and test data directories
 

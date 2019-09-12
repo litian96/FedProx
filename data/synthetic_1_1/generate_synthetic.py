@@ -10,6 +10,7 @@ import math
 
 NUM_USER = 30
 
+
 def softmax(x):
     ex = np.exp(x)
     sum_ex = np.sum( np.exp(x))
@@ -20,7 +21,7 @@ def generate_synthetic(alpha, beta, iid):
 
     dimension = 60
     NUM_CLASS = 10
-    
+
     samples_per_user = np.random.lognormal(4, 2, (NUM_USER)).astype(int) + 50
     print(samples_per_user)
     num_samples = np.sum(samples_per_user)
@@ -41,24 +42,14 @@ def generate_synthetic(alpha, beta, iid):
     cov_x = np.diag(diagonal)
 
     for i in range(NUM_USER):
-        if iid == 1:
-            mean_x[i] = np.ones(dimension) * B[i]  # all zeros
-        else:
-            mean_x[i] = np.random.normal(B[i], 1, dimension)
+        mean_x[i] = np.random.normal(B[i], 1, dimension)
         print(mean_x[i])
 
-    if iid == 1:
-        W_global = np.random.normal(0, 1, (dimension, NUM_CLASS))
-        b_global = np.random.normal(0, 1,  NUM_CLASS)
 
     for i in range(NUM_USER):
 
         W = np.random.normal(mean_W[i], 1, (dimension, NUM_CLASS))
         b = np.random.normal(mean_b[i], 1,  NUM_CLASS)
-
-        if iid == 1:
-            W = W_global
-            b = b_global
 
         xx = np.random.multivariate_normal(mean_x[i], cov_x, samples_per_user[i])
         yy = np.zeros(samples_per_user[i])
@@ -80,16 +71,10 @@ def generate_synthetic(alpha, beta, iid):
 def main():
 
 
-    train_data = {'users': [], 'user_data':{}, 'num_samples':[]}
-    test_data = {'users': [], 'user_data':{}, 'num_samples':[]}
+    train_path = "data/train/mytrain.json"
+    test_path = "data/test/mytest.json"
 
-    train_path = "train/mytrain.json"
-    test_path = "test/mytest.json"
-
-    #X, y = generate_synthetic(alpha=0, beta=0, iid=0)     # synthetiv (0,0)
-    #X, y = generate_synthetic(alpha=0.5, beta=0.5, iid=0) # synthetic (0.5, 0.5)
     X, y = generate_synthetic(alpha=1, beta=1, iid=0)     # synthetic (1,1)
-    #X, y = generate_synthetic(alpha=0, beta=0, iid=1)      # synthetic_IID
 
 
     # Create data structure
