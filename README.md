@@ -6,7 +6,7 @@ This repository contains the code and experiments for the manuscript:
 
 Federated Learning is a distributed learning paradigm with two key challenges that differentiate it from traditional distributed optimization: (1) significant variability in terms of the systems characteristics on each device in the network (systems heterogeneity), and (2) non-identically distributed data across the network (statistical heterogeneity). In this work, we introduce a framework, FedProx, to tackle heterogeneity in federated networks, both theoretically and empirically. 
 
-This repository contains a set of detailed empirical evaluation across a suite of federated datasets. We show that FedProx allows for more robust convergence than FedAvg. In particular, in highly heterogeneous settings, FedProx demonstrates significantly more stable and accurate convergence behavior relative to FedAvg—improving absolute test accuracy by 18.8% on average.
+This repository contains a set of detailed empirical evaluation across a suite of federated datasets. We show that FedProx allows for more robust convergence than FedAvg. In particular, in highly heterogeneous settings, FedProx demonstrates significantly more stable and accurate convergence behavior relative to FedAvg—improving absolute test accuracy by 22% on average.
 
 
 ## Preparation
