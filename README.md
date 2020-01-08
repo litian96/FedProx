@@ -1,8 +1,10 @@
 # Federated Optimization in Heterogeneous Networks
 
-This repository contains the code and experiments for the manuscript:
+This repository contains the code and experiments for the paper:
 
 > [Federated Optimization in Heterogeneous Networks](https://arxiv.org/abs/1812.06127)
+>
+> [MLSys 2020](https://mlsys.org/)
 
 Federated Learning is a distributed learning paradigm with two key challenges that differentiate it from traditional distributed optimization: (1) significant variability in terms of the systems characteristics on each device in the network (systems heterogeneity), and (2) non-identically distributed data across the network (statistical heterogeneity). In this work, we introduce a framework, FedProx, to tackle heterogeneity in federated networks, both theoretically and empirically. 
 
