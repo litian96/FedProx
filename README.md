@@ -15,7 +15,7 @@ This repository contains a set of detailed empirical evaluation across a suite o
 
 ### Dataset generation
 
-We **already includes four synthetic datasets** under corresponding folders that are used in the paper. For all datasets, see the `README` files in separate `data/$dataset` folders for instructions on preprocessing and/or sampling data.
+We **already provide four synthetic datasets** that are used in the paper under corresponding folders. For all datasets, see the `README` files in separate `data/$dataset` folders for instructions on preprocessing and/or sampling data.
 
 The statistics of real federated datasets are summarized as follows.
 
@@ -67,7 +67,7 @@ python plot_fig2.py dissim   # dissimilarity metric
 ```
 
 
-The training loss, testing accuracy and dissimilarity measurement figures are saved as `loss.pdf`, `accuracy.pdf` and `dissim.pdf` respectively, under the current folder where you call `plot_fig2.py`. You can check that these figures reproduce the results in Figure 2 in the paper. Make sure to use the default hyper-parameters in `run_fedavg.sh/run_fedprox.sh` for synthetic data. 
+The training loss, testing accuracy, and dissimilarity metric figures are saved as `loss.pdf`, `accuracy.pdf` and `dissim.pdf` respectively, under the current folder where you call `plot_fig2.py`. You can check that these figures reproduce the results in Figure 2 in the paper. Make sure to use the default hyper-parameters in `run_fedavg.sh/run_fedprox.sh` for synthetic data. 
 
 For example, the training loss for synthetic datasets would look like this:
 
@@ -76,18 +76,18 @@ For example, the training loss for synthetic datasets would look like this:
 
 
 ## Run on real federated datasets
-(1) Specify a GPU id if you want to use GPUs:
+(1) Specify a GPU id if needed:
 
 ```
 export CUDA_VISIBLE_DEVICES=available_gpu_id
 ```
-Otherwise just run to CPUs [might be slow if testing on non-convex Neural Network models]:
+Otherwise just run to CPUs [might be slow if testing on Neural Network models]:
 
 ```
 export CUDA_VISIBLE_DEVICES=
 ```
 
-(2) Run on one dataset. First, modify the `run_fedavg.sh` and `run_fedprox.sh` scripts, specify the corresponding model to that dataset (choose from `flearn/models/$DATASET/$MODEL.py` and use `$MODEL` as the model name), specify a log file name, and configure all other parameters such as learning rate (we report all the hyper-parameters in the appendix of the paper):
+(2) Run on one dataset. First, modify the `run_fedavg.sh` and `run_fedprox.sh` scripts, specify the corresponding model of that dataset (choose from `flearn/models/$DATASET/$MODEL.py` and use `$MODEL` as the model name), specify a log file name, and configure all other parameters such as learning rate (see all hyper-parameters values in the appendix of the paper).
 
 
 For example, for all the synthetic data:
@@ -133,7 +133,7 @@ bash run_fedprox.sh synthetic_1_1 0.9 0 | tee synthetic_1_1/fedprox_drop0.9_mu0
 bash run_fedprox.sh synthetic_1_1 0.9 1 | tee synthetic_1_1/fedprox_drop0.9_mu1
 ```
 
-And the accuracy, loss and dissimilarity information will be saved in the log files.
+And the test accuracy, training loss, and dissimilarity numbers will be saved in the log files.
 
 (3) After you collect logs for all the 5 datasets in Figure 1 (synthetic, mnist, femnist, shakespeare, sent140) (the log directories should be `[synthetic_1_1, mnist, femnist, shakespeare, sent140]`), run:
 
