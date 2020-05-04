@@ -148,4 +148,4 @@ to reproduce results in Figure 1 (the generated figure is called `loss_full.pdf`
 
 
 ## References
-See our [FedProx](https://arxiv.org/abs/1812.06127)  manuscript for more details as well as all references.
+See our [FedProx](https://arxiv.org/abs/1812.06127)  paper for more details as well as all references.
