@@ -14,7 +14,7 @@ This repository contains a set of detailed empirical evaluation across a suite o
 
 Note that if you would like to use FedProx as a baseline and run our code:
 
-* If you are using different datasets, then at least the learning rates and the mu parameter needs to be tuned based on your metric. You might want to tune mu from {0.001, 0.01, 0.1, 0.5, 1}. There are no default mu that works for all scenarios.
+* If you are using different datasets, then at least the learning rates and the mu parameter need to be tuned based on your metric. You might want to tune mu from {0.001, 0.01, 0.1, 0.5, 1}. There are no default mu values that would work for all settings.
 
 * If you are using the same datasets as those used here, then need to use the same learning rates and mu reported in our [paper](https://arxiv.org/abs/1812.06127).
 
