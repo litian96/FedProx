@@ -10,6 +10,14 @@ Federated Learning is a distributed learning paradigm with two key challenges th
 
 This repository contains a set of detailed empirical evaluation across a suite of federated datasets. We show that FedProx allows for more robust convergence than FedAvg. In particular, in highly heterogeneous settings, FedProx demonstrates significantly more stable and accurate convergence behavior relative to FedAvg—improving absolute test accuracy by 22% on average.
 
+## General Guidelines
+
+Note that if you would like to use FedProx as a baseline and run our code:
+
+* If you are using different datasets, then at least the learning rates and the mu parameter needs to be tuned based on your metric. You might want to tune mu from {0.001, 0.01, 0.1, 0.5, 1}. There are no default mu that works for all scenarios.
+
+* If you are using the same datasets as those used here, then need to use the same learning rates and mu reported in our [paper](https://arxiv.org/abs/1812.06127).
+
 
 ## Preparation
 
