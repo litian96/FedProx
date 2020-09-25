@@ -1,6 +1,6 @@
 numpy
 scipy
-tensorflow-gpu==1.10
+tensorflow-gpu==1.15.4
 Pillow
 matplotlib
 jupyter
