@@ -55,6 +55,7 @@ export CUDA_VISIBLE_DEVICES=
 
 
 ```
+mkdir log_synthetic
 bash run_fedavg.sh synthetic_iid 0 | tee log_synthetic/synthetic_iid_client10_epoch20_mu0
 bash run_fedprox.sh synthetic_iid 0 1 | tee log_synthetic/synthetic_iid_client10_epoch20_mu1
 bash run_fedavg.sh synthetic_0_0 0 | tee log_synthetic/synthetic_0_0_client10_epoch20_mu0
