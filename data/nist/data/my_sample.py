@@ -57,7 +57,9 @@ def main():
 
 
     for class_ in os.listdir(file_dir):
-
+        if class_ == ".DS_Store":
+            continue
+            
         real_class = relabel_class(class_)
         if real_class >= 36 and real_class <= 45:
             full_img_path = file_dir + "/" + class_ + "/train_" + class_
