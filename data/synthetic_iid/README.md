@@ -1,3 +1,3 @@
 ```
-python generate_synthetic.py
+python generate_iid.py
 ```
