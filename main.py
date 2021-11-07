@@ -3,7 +3,10 @@ import argparse
 import importlib
 import random
 import os
-import tensorflow as tf
+import time
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 from flearn.utils.model_utils import read_data
 
 # GLOBAL PARAMETERS
@@ -132,7 +135,11 @@ def main():
 
     # call appropriate trainer
     t = optimizer(options, learner, dataset)
+    start_time = time.time()
+    print("start training")
     t.train()
+    print("end training")
+    print(f"training takes {time.time() - start_time:.4f}s")
     
 if __name__ == '__main__':
     main()
